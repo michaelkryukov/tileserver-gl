@@ -23,11 +23,12 @@ describe('Styles', function() {
           res.body.sources.should.be.Object();
           res.body.glyphs.should.be.String();
           res.body.sprite.should.be.String();
-          res.body.sprite.should.equal('/test/styles/test-style/sprite');
+          res.body.sprite.should.endWith('/test/styles/test-style/sprite');
           res.body.layers.should.be.Array();
         }).end(done);
     });
   });
+
   describe('/styles/streets/style.json is not served', function() {
     testIs('/styles/streets/style.json', /./, 404);
   });
