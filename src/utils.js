@@ -1,13 +1,25 @@
 'use strict';
 
-const path = require('path');
 const fs = require('fs');
-
+const url = require('url');
+const path = require('path');
 const clone = require('clone');
 const glyphCompose = require('@mapbox/glyph-pbf-composite');
 
 
-module.exports.getPublicUrl = (publicUrl, req) => publicUrl || `${req.protocol}://${req.headers.host}/`;
+const getPublicUrl = (publicUrl, req) => {
+  const baseUrl = `${req.protocol}://${req.headers.host}/`;
+
+  if (publicUrl) {
+    return (new url.URL(publicUrl, baseUrl)).toString();
+  }
+
+  return baseUrl;
+}
+
+
+module.exports.getPublicUrl = getPublicUrl;
+
 
 module.exports.getTileUrls = (req, domains, path, format, publicUrl, aliases) => {
 
@@ -57,7 +69,7 @@ module.exports.getTileUrls = (req, domains, path, format, publicUrl, aliases) =>
       uris.push(`${req.protocol}://${domain}/${path}/{z}/{x}/{y}.${format}${query}`);
     }
   } else {
-    uris.push(`${publicUrl}${path}/{z}/{x}/{y}.${format}${query}`)
+    uris.push(`${getPublicUrl(publicUrl, req)}${path}/{z}/{x}/{y}.${format}${query}`)
   }
 
   return uris;
