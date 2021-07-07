@@ -9,7 +9,8 @@ const glyphCompose = require('@mapbox/glyph-pbf-composite');
 
 const getPublicUrl = (publicUrl, req) => {
   const host = req.headers['x-forwarded-host'] || req.headers.host;
-  const baseUrl = `${req.protocol}://${host}/`;
+  const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+  const baseUrl = `${protocol}://${host}/`;
 
   if (publicUrl) {
     return (new url.URL(publicUrl, baseUrl)).toString();
