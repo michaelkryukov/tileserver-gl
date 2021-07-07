@@ -64,7 +64,7 @@ module.exports.getTileUrls = (req, domains, path, format, publicUrl, aliases) =>
   }
 
   const uris = [];
-  if (req.query.noPublicUrl || !publicUrl) {
+  if (!publicUrl) {
     for (const domain of domains) {
       uris.push(`${req.protocol}://${domain}/${path}/{z}/{x}/{y}.${format}${query}`);
     }
