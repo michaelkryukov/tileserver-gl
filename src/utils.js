@@ -50,7 +50,6 @@ module.exports.getTileUrls = (req, domains, path, format, publicUrl, aliases) =>
     domains = [req.headers.host];
   }
 
-  const key = req.query.key;
   const queryParams = [];
   if (req.query.key) {
     queryParams.push(`key=${encodeURIComponent(req.query.key)}`);
@@ -65,7 +64,7 @@ module.exports.getTileUrls = (req, domains, path, format, publicUrl, aliases) =>
   }
 
   const uris = [];
-  if (!publicUrl) {
+  if (req.query.noPublicUrl || !publicUrl) {
     for (const domain of domains) {
       uris.push(`${req.protocol}://${domain}/${path}/{z}/{x}/{y}.${format}${query}`);
     }
