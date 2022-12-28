@@ -8,7 +8,7 @@ const clone = require('clone');
 const glyphCompose = require('@mapbox/glyph-pbf-composite');
 
 
-module.exports.getPublicUrl = (publicUrl, req) => {
+const getPublicUrl = (publicUrl, req) => {
   const host = req.headers['x-forwarded-host'] || req.headers.host;
   const protocol = req.headers['x-forwarded-proto'] || req.protocol;
   const baseUrl = `${protocol}://${host}/`;
@@ -19,6 +19,9 @@ module.exports.getPublicUrl = (publicUrl, req) => {
 
   return baseUrl;
 };
+
+
+module.exports.getPublicUrl = getPublicUrl;
 
 
 module.exports.getTileUrls = (req, domains, path, format, publicUrl, aliases) => {
