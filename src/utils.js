@@ -71,7 +71,7 @@ module.exports.getTileUrls = (req, domains, path, format, publicUrl, aliases) =>
       uris.push(`${req.protocol}://${domain}/${path}/{z}/{x}/{y}.${format}${query}`);
     }
   } else {
-    uris.push(`${getPublicUrl(publicUrl, req)}}${path}/{z}/{x}/{y}.${format}${query}`)
+    uris.push(`${getPublicUrl(publicUrl, req)}${path}/{z}/{x}/{y}.${format}${query}`)
   }
 
   return uris;
