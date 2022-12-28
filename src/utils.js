@@ -1,16 +1,27 @@
 'use strict';
 
 const path = require('path');
+const url = require('url');
 const fs = require('fs');
 
 const clone = require('clone');
 const glyphCompose = require('@mapbox/glyph-pbf-composite');
 
 
-module.exports.getPublicUrl = (publicUrl, req) => publicUrl || `${req.protocol}://${req.headers.host}/`;
+module.exports.getPublicUrl = (publicUrl, req) => {
+  const host = req.headers['x-forwarded-host'] || req.headers.host;
+  const protocol = req.headers['x-forwarded-proto'] || req.protocol;
+  const baseUrl = `${protocol}://${host}/`;
+
+  if (publicUrl) {
+    return (new url.URL(publicUrl, baseUrl)).toString();
+  }
+
+  return baseUrl;
+};
+
 
 module.exports.getTileUrls = (req, domains, path, format, publicUrl, aliases) => {
-
   if (domains) {
     if (domains.constructor === String && domains.length > 0) {
       domains = domains.split(',');
