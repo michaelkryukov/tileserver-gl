@@ -19,19 +19,19 @@ const testPublicUrl = (publicUrl, expectation, end) => {
 describe('Server configuration', function () {
   it('Absolute "public_url" works', function (done) {
     testPublicUrl('https://domain.com/', function (res) {
-      res.body.sprite.should.endWith('https://domain.com/styles/test-style/sprite').to.be.true;
+      res.body.sprite.should.endWith('https://domain.com/styles/test-style/sprite');
     }, done);
   });
 
   it('Relative "public_url" works', function (done) {
     testPublicUrl('/test/', function (res) {
-      res.body.sprite.should.endWith('/test/styles/test-style/sprite').to.be.true;
+      res.body.sprite.should.endWith('/test/styles/test-style/sprite');
     }, done);
   });
 
   it('No "public_url" works', function (done) {
     testPublicUrl(null, function (res) {
-      res.body.sprite.should.endWith('/styles/test-style/sprite').to.be.true;
+      res.body.sprite.should.endWith('/styles/test-style/sprite');
     }, done);
   });
 });
